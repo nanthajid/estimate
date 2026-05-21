@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>แบบประเมินความพึงพอใจ</title>
+
+  <!-- IBM Plex Sans Thai -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'IBM Plex Sans Thai', sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100">
+
+  <!-- Mobile Container -->
+  <main class="max-w-md mx-auto min-h-screen pb-32">
+
+    <!-- Header -->
+    <section class="px-5 pt-6">
+
+      <div class="bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl overflow-hidden shadow-lg text-white text-center">
+
+        <!-- Employee Image (Fully Visible) -->
+        <div class="w-full bg-slate-200">
+          <img
+            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400"
+            alt="employee"
+            class="w-full h-auto block"
+          >
+        </div>
+
+        <div class="p-6 relative bg-gradient-to-br from-sky-500 to-blue-600">
+          <p class="text-sm opacity-90">พนักงานผู้ให้บริการ</p>
+          <h1 class="text-2xl font-bold mt-1">
+            คุณกานต์ธิดา
+          </h1>
+
+          <div class="mt-3 inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-sm border border-white/20">
+            ⭐ Customer Service
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Survey Card -->
+    <section class="px-5 mt-6">
+
+      <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm p-5">
+
+        <h2 class="text-lg font-semibold leading-relaxed">
+          ท่านพึงพอใจต่อการให้บริการครั้งนี้มากน้อยเพียงใด
+        </h2>
+
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">
+          โปรดเลือกคะแนนที่ตรงกับความรู้สึกของท่าน
+        </p>
+
+        <!-- Rating Buttons -->
+        <div class="grid grid-cols-1 gap-4 mt-6">
+
+          <!-- 5 -->
+          <button class="group bg-sky-50 dark:bg-slate-800 border-2 border-transparent hover:border-sky-400 active:scale-[0.98] transition-all rounded-2xl p-4 text-left">
+            <div class="flex items-center justify-between">
+
+              <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-2xl bg-sky-500 text-white flex items-center justify-center text-2xl shadow-md">
+                  😍
+                </div>
+
+                <div>
+                  <h3 class="font-semibold text-base">
+                    พึงพอใจมากที่สุด
+                  </h3>
+
+                  <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                    บริการยอดเยี่ยม ประทับใจมาก
+                  </p>
+                </div>
+              </div>
+
+              <div class="text-sky-500 text-xl font-bold">
+                5
+              </div>
+
+            </div>
+          </button>
+
+          <!-- 4 -->
+          <button class="group bg-sky-50 dark:bg-slate-800 border-2 border-transparent hover:border-sky-400 active:scale-[0.98] transition-all rounded-2xl p-4 text-left">
+            <div class="flex items-center justify-between">
+
+              <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-2xl bg-sky-400 text-white flex items-center justify-center text-2xl shadow-md">
+                  😊
+                </div>
+
+                <div>
+                  <h3 class="font-semibold text-base">
+                    พึงพอใจมาก
+                  </h3>
+
+                  <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                    บริการดี สุภาพ รวดเร็ว
+                  </p>
+                </div>
+              </div>
+
+              <div class="text-sky-500 text-xl font-bold">
+                4
+              </div>
+
+            </div>
+          </button>
+
+          <!-- 3 -->
+          <button class="group bg-sky-50 dark:bg-slate-800 border-2 border-transparent hover:border-sky-400 active:scale-[0.98] transition-all rounded-2xl p-4 text-left">
+            <div class="flex items-center justify-between">
+
+              <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-2xl bg-slate-400 text-white flex items-center justify-center text-2xl shadow-md">
+                  😐
+                </div>
+
+                <div>
+                  <h3 class="font-semibold text-base">
+                    ปานกลาง
+                  </h3>
+
+                  <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                    บริการอยู่ในระดับทั่วไป
+                  </p>
+                </div>
+              </div>
+
+              <div class="text-sky-500 text-xl font-bold">
+                3
+              </div>
+
+            </div>
+          </button>
+
+          <!-- 2 -->
+          <button class="group bg-sky-50 dark:bg-slate-800 border-2 border-transparent hover:border-sky-400 active:scale-[0.98] transition-all rounded-2xl p-4 text-left">
+            <div class="flex items-center justify-between">
+
+              <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-2xl bg-orange-400 text-white flex items-center justify-center text-2xl shadow-md">
+                  😕
+                </div>
+
+                <div>
+                  <h3 class="font-semibold text-base">
+                    ควรปรับปรุง
+                  </h3>
+
+                  <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                    ยังมีบางส่วนที่ไม่สะดวก
+                  </p>
+                </div>
+              </div>
+
+              <div class="text-sky-500 text-xl font-bold">
+                2
+              </div>
+
+            </div>
+          </button>
+
+          <!-- 1 -->
+          <button class="group bg-sky-50 dark:bg-slate-800 border-2 border-transparent hover:border-red-400 active:scale-[0.98] transition-all rounded-2xl p-4 text-left">
+            <div class="flex items-center justify-between">
+
+              <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-2xl bg-red-500 text-white flex items-center justify-center text-2xl shadow-md">
+                  😡
+                </div>
+
+                <div>
+                  <h3 class="font-semibold text-base">
+                    ไม่พึงพอใจ
+                  </h3>
+
+                  <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                    ควรปรับปรุงการให้บริการ
+                  </p>
+                </div>
+              </div>
+
+              <div class="text-red-500 text-xl font-bold">
+                1
+              </div>
+
+            </div>
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Sticky CTA -->
+  <div class="fixed bottom-0 left-0 right-0 z-50">
+
+    <div class="max-w-md mx-auto p-4">
+
+      <div class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-2xl rounded-3xl p-3">
+
+        <button class="w-full bg-sky-500 hover:bg-sky-600 active:scale-[0.99] transition-all text-white font-semibold py-4 rounded-2xl text-lg shadow-lg">
+
+          ถัดไป →
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
