@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Staff Feedback System</title>
+    <style>
+        :root {
+            --primary: oklch(55% 0.16 250);
+            --bg: oklch(98% 0.005 250);
+            --surface: oklch(100% 0 0);
+            --fg: oklch(20% 0.015 250);
+            --muted: oklch(55% 0.015 250);
+            --border: oklch(92% 0.01 250);
+            --radius-lg: 16px;
+            --shadow-md: 0 10px 30px -10px oklch(0% 0 0 / 8%);
+            --font-main: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Prompt', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--fg);
+            font-family: var(--font-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .login-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            box-shadow: var(--shadow-md);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            color: var(--muted);
+            margin-bottom: 32px;
+        }
+
+        .line-btn {
+            background: #06C755;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .line-btn:hover {
+            opacity: 0.9;
+        }
+
+        .line-icon {
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+        </div>
+        <h1>Admin Login</h1>
+        <p>กรุณาเข้าสู่ระบบด้วย LINE เพื่อจัดการระบบ</p>
+        
+        <a href="api/line_login.php" class="line-btn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" class="line-icon" alt="LINE">
+            เข้าสู่ระบบด้วย LINE
+        </a>
+    </div>
+</body>
+</html>

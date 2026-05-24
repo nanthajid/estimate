@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Staff Feedback System</title>
+  
+  <!-- React & Babel Pinned Versions -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      /* Modern Premium Palette using OKLCH */
+      --bg:      oklch(98% 0.005 250);
+      --surface: oklch(100% 0 0);
+      --fg:      oklch(20% 0.015 250);
+      --muted:   oklch(55% 0.015 250);
+      --border:  oklch(93% 0.008 250);
+      --accent:  oklch(60% 0.16 250); /* Royal Blue */
+      
+      --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+      --font-body:    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+      
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      
+      /* Safe area for modern mobile devices */
+      --padding-top: env(safe-area-inset-top, 20px);
+      --padding-bottom: env(safe-area-inset-bottom, 20px);
+    }
+
+    [data-theme='dark'] {
+      --bg:      oklch(18% 0.01 250);
+      --surface: oklch(22% 0.015 250);
+      --fg:      oklch(98% 0.005 250);
+      --muted:   oklch(65% 0.01 250);
+      --border:  oklch(28% 0.015 250);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none; /* Prevent text selection on touch */
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-x: hidden;
+    }
+
+    #root {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    /* Layout Containers */
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: var(--padding-top) 24px var(--padding-bottom);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      flex: 1;
+      justify-content: center; /* Center content vertically on mobile */
+    }
+
+    /* Modern Staff Card */
+    .staff-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 40px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 
+        0 10px 40px -10px oklch(0% 0 0 / 5%),
+        0 2px 4px oklch(0% 0 0 / 2%);
+      transition: transform 0.3s ease;
+    }
+
+    .staff-photo-container {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      padding: 4px;
+      background: conic-gradient(from 0deg, var(--accent), oklch(80% 0.1 250), var(--accent));
+      box-shadow: 0 12px 32px -8px oklch(60% 0.16 250 / 30%);
+    }
+
+    .staff-photo {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--bg);
+      display: block;
+    }
+
+    .staff-info h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .staff-info p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    /* Modern Rating Grid */
+    .rating-section {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      text-align: center;
+    }
+
+    .rating-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--fg);
+      letter-spacing: -0.01em;
+    }
+
+    .rating-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .rating-button {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Touch Feedback */
+    .rating-button:active {
+      transform: scale(0.85);
+      background: var(--bg);
+    }
+
+    .rating-button.selected {
+      border-color: var(--accent);
+      background: oklch(from var(--accent) 96% 0.02 h);
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 12px 24px -8px oklch(60% 0.16 250 / 20%);
+    }
+
+    .rating-emoji {
+      font-size: 36px;
+      filter: drop-shadow(0 4px 8px oklch(0% 0 0 / 10%));
+      transition: transform 0.3s ease;
+    }
+    .rating-button.selected .rating-emoji {
+      transform: scale(1.1);
+    }
+
+    .rating-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .rating-button.selected .rating-label { color: var(--accent); }
+
+    /* Modern Action Button */
+    .submit-button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      font-size: 19px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: 8px;
+      box-shadow: 0 8px 24px -6px oklch(60% 0.16 250 / 40%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .submit-button:disabled {
+      opacity: 0.2;
+      filter: grayscale(1);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .submit-button:not(:disabled):active {
+      transform: scale(0.96);
+      filter: brightness(1.1);
+      box-shadow: 0 4px 12px -4px oklch(60% 0.16 250 / 40%);
+    }
+
+    /* Animated Success State */
+    .success-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .success-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .success-icon {
+      font-size: 100px;
+      margin-bottom: 24px;
+      filter: drop-shadow(0 12px 24px oklch(0% 0 0 / 10%));
+      animation: bounceIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .success-title {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -0.04em;
+    }
+
+    .success-text {
+      color: var(--muted);
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* RTL Support */
+    [dir="rtl"] { text-align: right; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const RATINGS = [
+      { id: 5, emoji: "😍", label: "ดีมาก", color: "oklch(70% 0.18 145)" },
+      { id: 4, emoji: "😊", label: "ดี", color: "oklch(80% 0.15 145)" },
+      { id: 3, emoji: "😐", label: "ปานกลาง", color: "oklch(85% 0.05 100)" },
+      { id: 2, emoji: "😕", label: "พอใช้", color: "oklch(75% 0.12 60)" },
+      { id: 1, emoji: "😠", label: "ปรับปรุง", color: "oklch(60% 0.22 25)" }
+    ];
+
+    function App() {
+      const [staff, setStaff] = useState(null);
+      const [selectedRating, setSelectedRating] = useState(null);
+      const [isSubmitted, setIsSubmitted] = useState(false);
+      const [loading, setLoading] = useState(true);
+      const [error, setError] = useState(null);
+      const [theme, setTheme] = useState("light");
+      const [lang, setLang] = useState("th");
+
+      useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const staffId = urlParams.get('id');
+
+        if (!staffId) {
+          setError("ไม่พบรหัสพนักงานใน URL");
+          setLoading(false);
+          return;
+        }
+
+        fetch(`../admin/api/staff.php?staff_id=${staffId}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data && data.staff_id) {
+              setStaff(data);
+            } else {
+              setError("ไม่พบข้อมูลพนักงาน");
+            }
+            setLoading(false);
+          })
+          .catch(err => {
+            setError("เกิดข้อผิดพลาดในการโหลดข้อมูล");
+            setLoading(false);
+          });
+      }, []);
+
+      const submitFeedback = (rating) => {
+        setSelectedRating(rating);
+        fetch('../admin/api/submit_feedback.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            staff_id: staff.staff_id,
+            rating: rating
+          })
+        })
+        .then(res => res.json())
+        .then(() => {
+          setIsSubmitted(true);
+          setTimeout(() => {
+            setIsSubmitted(false);
+            setSelectedRating(null);
+          }, 5000);
+        });
+      };
+
+      const t = {
+        th: {
+          welcome: "กรุณาประเมินความพึงพอใจในการให้บริการ",
+          thanks: "ขอบคุณสำหรับความคิดเห็นของคุณ ❤️",
+          redirect: "ระบบจะกลับหน้าแรกใน 5 วินาที"
+        },
+        en: {
+          welcome: "Please rate our service",
+          thanks: "Thank you for your feedback! ❤️",
+          redirect: "Returning in 5 seconds"
+        }
+      }[lang];
+
+      const getImageUrl = (url) => {
+        if (!url) return 'https://via.placeholder.com/200';
+        if (url.startsWith('http')) return url;
+        return '../' + url;
+      };
+
+      if (loading) return <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center' }}>กำลังโหลด...</div>;
+      if (error) return <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', color: 'red' }}>{error}</div>;
+
+      return (
+        <div data-theme={theme} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <div className="app-container">
+            {/* Staff Profile */}
+            <div className="staff-card">
+              <div className="staff-photo-container">
+                <img src={getImageUrl(staff.photo_url)} alt={staff.name} className="staff-photo" />
+              </div>
+              <div className="staff-info">
+                <h1>{staff.name}</h1>
+                <p>{staff.position} • {staff.department}</p>
+              </div>
+            </div>
+
+            {/* Rating Section */}
+            <div className="rating-section">
+              <div className="rating-title">{t.welcome}</div>
+              <div className="rating-grid">
+                {RATINGS.map((r) => (
+                  <button
+                    key={r.id}
+                    className={`rating-button ${selectedRating === r.id ? 'selected' : ''}`}
+                    onClick={() => submitFeedback(r.id)}
+                  >
+                    <span className="rating-emoji">{r.emoji}</span>
+                    <span className="rating-label">{r.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Success Overlay */}
+          <div className={`success-overlay ${isSubmitted ? 'show' : ''}`}>
+            <div className="success-icon">✨</div>
+            <h2 className="success-title">{t.thanks}</h2>
+            <p className="success-text">{t.redirect}</p>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
